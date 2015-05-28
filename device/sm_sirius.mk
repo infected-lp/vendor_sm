@@ -23,10 +23,12 @@ endif
 # Only use these compilers on linux host.
 ifeq ($(strip $(HOST_OS)),linux)
 
+export LOCAL_O3 := true
 TARGET_SM_KERNEL := 4.9
 TARGET_SM_AND := 4.9
 TARGET_ARCH := arm
 LOCAL_ARCH := arm
+
 LOCAL_DISABLE_STRICT_ALIASING := \
 	libcrypto_static \
 	gatt_testtool \
@@ -74,4 +76,3 @@ export CONFIG_MACH_MSM8974_SIRIUS_STRICT_ALIASING := y
       camera.sirius
   endif
 endif
-

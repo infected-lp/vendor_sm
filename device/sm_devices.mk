@@ -33,6 +33,8 @@ ifneq ($(filter sirius,$(TARGET_DEVICE)),)
   LOCAL_ARCH := arm
 endif
 
+# Kernel binary prefix.  The other part of this will go in the kernel sources Makefiles.
+
 ifeq ($(strip $(LOCAL_ARCH)),arm)
 export TARGET_KERNEL_TOOLS_PREFIX := arm-linux-gnueabi-
 endif
