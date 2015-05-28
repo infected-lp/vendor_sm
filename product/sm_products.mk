@@ -26,6 +26,10 @@ ifneq ($(filter %mako,$(TARGET_PRODUCT)),)
   TARGET_DEVICE := mako
 endif
 
+ifneq ($(filter %sirius,$(TARGET_PRODUCT)),)
+  TARGET_DEVICE := sirius
+endif
+
 # Filter ROM base
 ifneq ($(filter aosp% boostpop% pa%,$(TARGET_PRODUCT)),)
   TARGET_BASE_ROM := aosp

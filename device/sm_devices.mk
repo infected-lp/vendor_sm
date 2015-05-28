@@ -28,6 +28,11 @@ ifneq ($(filter mako,$(TARGET_DEVICE)),)
   LOCAL_ARCH := arm
 endif
 
+ifneq ($(filter sirius,$(TARGET_DEVICE)),)
+  include $(SM_VENDOR)/device/sm_sirius.mk
+  LOCAL_ARCH := arm
+endif
+
 ifeq ($(strip $(LOCAL_ARCH)),arm)
 TARGET_KERNEL_TOOLS_PREFIX := arm-linux-gnueabi-
 endif
