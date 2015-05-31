@@ -78,9 +78,9 @@ ifneq ($(filter arm arm64,$(TARGET_ARCH)),)
           LOCAL_CFLAGS := -lgomp -ldl -lgcc -fopenmp
         endif
         ifdef LOCAL_LDLIBS
-          LOCAL_LDLIBS += -lgomp -ldl -lgcc
+          LOCAL_LDLIBS += -lgomp -lgcc
         else
-          LOCAL_LDLIBS := -lgomp -ldl -lgcc
+          LOCAL_LDLIBS := -lgomp -lgcc
         endif
       endif
     endif
