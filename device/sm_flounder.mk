@@ -24,9 +24,7 @@ endif
 ifeq ($(strip $(HOST_OS)),linux)
 
   # Sabermod configs
-  O3_OPTIMIZATIONS := true
   TARGET_SM_KERNEL := 5.1
-  TARGET_SM_AND := 4.9
   FLOUNDER_THREADS:= 2
   PRODUCT_THREADS := $(FLOUNDER_THREADS)
 
@@ -36,9 +34,6 @@ ifeq ($(strip $(HOST_OS)),linux)
     -fopenmp
 endif
 
-# Do not enable pthread when OpenMP is set to handle threads
-export ENABLE_PTHREAD := false
-
 # Extra SaberMod GCC C flags for arch target and Kernel
-export EXTRA_SABERMOD_GCC_VECTORIZE_CFLAGS := \
+export EXTRA_SABERMOD_GCC_VECTORIZE := \
   -ftree-vectorize

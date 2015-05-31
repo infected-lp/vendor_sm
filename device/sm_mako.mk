@@ -33,7 +33,7 @@ GRAPHITE_KERNEL_FLAGS := \
 endif
 
 # Extra SaberMod GCC C flags for arch target and Kernel
-export EXTRA_SABERMOD_GCC_VECTORIZE_CFLAGS := \
+export EXTRA_SABERMOD_GCC_VECTORIZE := \
          -ftree-vectorize \
          -mvectorize-with-neon-quad
 
