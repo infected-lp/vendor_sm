@@ -26,6 +26,7 @@ ifeq ($(strip $(HOST_OS)),linux)
   # Sabermod configs
   ENABLE_STRICT_ALIASING := true
 export ENABLE_PTHREAD := false
+export LOCAL_O3 := true
 
 GRAPHITE_KERNEL_FLAGS := \
   -fopenmp
