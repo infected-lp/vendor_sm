@@ -23,11 +23,20 @@ endif
 # Only use these compilers on linux host.
 ifeq ($(strip $(HOST_OS)),linux)
 
-O3_OPTIMIZATIONS := true
 TARGET_SM_KERNEL := 4.9
 TARGET_SM_AND := 4.9
 TARGET_ARCH := arm
 LOCAL_ARCH := arm
+LOCAL_DISABLE_STRICT_ALIASING := \
+	libcrypto_static \
+	gatt_testtool \
+	libssh \
+	ssh \
+	libsurfaceflinger \
+	libOmxVenc \
+	lsof
+
+LOCAL_DISABLE_GRAPHITE := libncurses
 
   # Sabermod configs
   SIRIUS_THREADS := 4
