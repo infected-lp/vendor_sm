@@ -316,7 +316,8 @@ export LIBRARY_PATH := $(TARGET_ARCH_LIB_PATH):$(LIBRARY_PATH)
         third_party_libvpx_libvpx_gyp \
         ui_gl_gl_gyp \
         fio \
-        libpdfiumcore
+        libpdfiumcore \
+        libFraunhoferAAC
 
       # Check if there's already something set somewhere.
       ifndef LOCAL_DISABLE_GRAPHITE
