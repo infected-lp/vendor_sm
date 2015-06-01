@@ -42,7 +42,6 @@ LOCAL_DISABLE_GRAPHITE := libncurses
   SIRIUS_THREADS := 4
   PRODUCT_THREADS := $(SIRIUS_THREADS)
   ENABLE_STRICT_ALIASING := true
-  export ENABLE_PTHREAD := false
 
 GRAPHITE_KERNEL_FLAGS := \
     -floop-parallelize-all \
