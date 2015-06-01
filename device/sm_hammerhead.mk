@@ -27,7 +27,8 @@ ifeq ($(strip $(HOST_OS)),linux)
   HAMMERHEAD_THREADS := 4
   PRODUCT_THREADS := $(HAMMERHEAD_THREADS)
   ENABLE_STRICT_ALIASING := true
-  export ENABLE_PTHREAD := false
+export ENABLE_PTHREAD := false
+export LOCAL_O3 := true
 
 GRAPHITE_KERNEL_FLAGS := \
     -floop-parallelize-all \
