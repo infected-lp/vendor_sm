@@ -37,6 +37,9 @@ ifeq ($(strip $(TARGET_ARCH)),arm)
             else
               LOCAL_CFLAGS := -marm
             endif
+            ifeq ($(strip $(LOCAL_CLANG)),true)
+              LOCAL_CLANG := false
+            endif
           endif
           ifeq ($(strip $(LOCAL_ARM_MODE)),thumb)
             ifdef LOCAL_CFLAGS
