@@ -30,6 +30,10 @@ ifneq ($(filter %shamu,$(TARGET_PRODUCT)),)
   TARGET_DEVICE := shamu
 endif
 
+ifneq ($(filter %sirius,$(TARGET_PRODUCT)),)
+  TARGET_DEVICE := sirius
+endif
+
 # Filter ROM base
 ifneq ($(filter aosp% boostpop% pa% twisted% benzo%,$(TARGET_PRODUCT)),)
   TARGET_BASE_ROM := aosp

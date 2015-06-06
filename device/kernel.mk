@@ -29,6 +29,14 @@ ifneq ($(filter %shamu,$(TARGET_PRODUCT)),)
   endif
 endif
 
+ifneq ($(filter %sirius,$(TARGET_PRODUCT)),)
+  KERNEL_DIR := kernel/sony/msm8974
+  KERNEL_BINARY_IMAGE := zImage-dtb
+  ifneq ($(filter pa% slim%,$(TARGET_PRODUCT)),)
+    KERNEL_DEFCONFIG := cm_shinano_sirius_defconfig
+  endif
+endif
+
 ifdef KERNEL_DIR
   include $(KERNEL_DIR)/AndroidKernel.mk
 endif
