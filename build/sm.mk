@@ -17,6 +17,12 @@
 # arm mode
 include $(SM_VENDOR)/build/arm.mk
 
+# Extra sabermod optimizations
+include $(SM_VENDOR)/build/extra.mk
+
+# Strict Aliasing optimizations
+include $(SM_VENDOR)/build/strict.mk
+
 # O3 optimzations
 ifeq ($(strip $(LOCAL_O3)),true)
   ifneq ($(strip $(LOCAL_ARM_MODE))-$(strip $(LOCAL_DISABLE_O3_THUMB)),thumb-true)
@@ -37,9 +43,6 @@ ifeq ($(strip $(LOCAL_O3)),true)
     endif
   endif
 endif
-
-# Extra sabermod variables
-include $(SM_VENDOR)/build/extra.mk
 
 # Do not use graphite on host modules or the clang compiler.
 # Also do not bother using on darwin.
@@ -66,7 +69,7 @@ endif
 
 # General flags for gcc 4.9+ to allow compilation to complete.
 # Many of these are device specific and should be set in device make files.
-# See vendor/sm.  Add more sections below and to vendor/sm/device/sm_device.mk if need be.
+# See vendor/sm.  Add more sections below, and also to vendor/sm/device/sm_device.mk if need be.
 
 # modules that need -Wno-error=maybe-uninitialized
 ifdef MAYBE_UNINITIALIZED
@@ -90,8 +93,6 @@ ifneq ($(filter 5.1% 6.0%,$(SM_AND_NAME)),)
     endif
   endif
 endif
-
-include $(SM_VENDOR)/build/strict.mk
 
 ifneq ($(filter 5.1% 6.0%,$(SM_AND_NAME)),)
   ifeq ($(strip $(LOCAL_IS_HOST_MODULE)),true)

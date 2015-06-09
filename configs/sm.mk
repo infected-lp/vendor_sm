@@ -185,6 +185,24 @@ export TARGET_ARCH_LIB_PATH := $(ANDROID_BUILD_TOP)/prebuilts/gcc/$(HOST_PREBUIL
             $(BASE_GRAPHITE_KERNEL_FLAGS) \
             $(GRAPHITE_KERNEL_FLAGS)
         endif
+
+        ifneq ($(filter 5.1% 6.0%,$(SM_KERNEL_NAME)),)
+          # Flags to disable graphite in the kernel for gcc 5/6
+   export LOCAL_DISABLE_KERNEL_GRAPHITE := \
+            -fno-graphite \
+            -fno-graphite-identity \
+            -fno-loop-flatten \
+            -fno-tree-loop-linear \
+            -fno-loop-interchange \
+            -fno-loop-strip-mine \
+            -fno-loop-block \
+            -fno-loop-nest-optimize \
+            -fno-loop-unroll-and-jam \
+            -fno-loop-parallelize-all \
+            -ftree-parallelize-loops=0 \
+            -fno-openmp
+        endif
+
         ifeq ($(strip $(ENABLE_STRICT_ALIASING)),true)
 
           # strict-aliasing kernel flags
@@ -288,6 +306,24 @@ export TARGET_ARCH_LIB_PATH := $(ANDROID_BUILD_TOP)/prebuilts/gcc/$(HOST_PREBUIL
             $(BASE_GRAPHITE_KERNEL_FLAGS) \
             $(GRAPHITE_KERNEL_FLAGS)
         endif
+
+        ifneq ($(filter 5.1% 6.0%,$(SM_KERNEL_NAME)),)
+          # Flags to disable graphite in the kernel for gcc 5/6
+   export LOCAL_DISABLE_KERNEL_GRAPHITE := \
+            -fno-graphite \
+            -fno-graphite-identity \
+            -fno-loop-flatten \
+            -fno-tree-loop-linear \
+            -fno-loop-interchange \
+            -fno-loop-strip-mine \
+            -fno-loop-block \
+            -fno-loop-nest-optimize \
+            -fno-loop-unroll-and-jam \
+            -fno-loop-parallelize-all \
+            -ftree-parallelize-loops=0 \
+            -fno-openmp
+        endif
+
         ifeq ($(strip $(ENABLE_STRICT_ALIASING)),true)
 
         # strict-aliasing kernel flags
