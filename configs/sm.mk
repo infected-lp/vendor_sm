@@ -679,8 +679,13 @@ OPT3 := (extra)
 OPT6 := (memory-sanitizer)
 OPT7 := (OpenMP)
 
+# Right all optimization level options to build.prop
 GCC_OPTIMIZATION_LEVELS := $(OPT1)$(OPT2)$(OPT3)$(OPT4)$(OPT5)$(OPT6)$(OPT7)
 ifneq ($(GCC_OPTIMIZATION_LEVELS),)
   PRODUCT_PROPERTY_OVERRIDES += \
     ro.sm.flags=$(GCC_OPTIMIZATION_LEVELS)
 endif
+
+# Display platform version and build ID for build display ID
+PRODUCT_PROPERTY_OVERRIDES += \
+  ro.build.display.id="$(PLATFORM_VERSION) $(BUILD_ID)"
