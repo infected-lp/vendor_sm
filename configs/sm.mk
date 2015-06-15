@@ -63,7 +63,7 @@ ifneq ($(filter arm arm64,$(LOCAL_ARCH)),)
 endif
 
 ifeq ($(strip $(ENABLE_SABERMOD_ARM_MODE)),true)
-  OPT4 := (saber-mode)
+  OPT4 := gcc-arm
 endif
 
 ifeq ($(strip $(LOCAL_ARCH)),arm)
@@ -112,7 +112,7 @@ export TARGET_ARCH_LIB_PATH := $(ANDROID_BUILD_TOP)/prebuilts/gcc/$(HOST_PREBUIL
 
         
         # Graphite ROM flags
-        OPT1 := (graphite)
+        OPT1 := graphite
 
         # Some graphite flags are only available for certain gcc versions
  export GRAPHITE_UNROLL_AND_JAM_AND := $(filter 5.1% 6.0%,$(SM_AND_NAME))
@@ -233,7 +233,7 @@ export TARGET_ARCH_LIB_PATH := $(ANDROID_BUILD_TOP)/prebuilts/gcc/$(HOST_PREBUIL
           ro.sm.android=$(SM_AND_VERSION)
 
         # Graphite ROM flags
-        OPT1 := (graphite)
+        OPT1 := graphite
 
         # Some graphite flags are only available for certain gcc versions
  export GRAPHITE_UNROLL_AND_JAM_AND := $(filter 5.1% 6.0%,$(SM_AND_NAME))
@@ -514,7 +514,7 @@ ifeq ($(strip $(ENABLE_STRICT_ALIASING)),true)
     LOCAL_DISABLE_STRICT_ALIASING += \
       $(LOCAL_BASE_DISABLE_STRICT_ALIASING)
   endif
-  OPT5 := (strict-aliasing)
+  OPT5 := strict
 else
   OPT5 :=
 endif
@@ -556,7 +556,7 @@ ifeq ($(strip $(LOCAL_O3)),true)
   # If -O3 is enabled, force disable on thumb flags.
   # loop optmizations are not really usefull in thumb mode.
   LOCAL_DISABLE_O3_THUMB := true
-  OPT2 := (max)
+  OPT2 := O3
 
   # Disable some modules that break with -O3
   # Add more modules if needed for devices in device/sm_device.mk or by ROM in product/rom_product.mk with
@@ -675,17 +675,13 @@ endif
 # Some flags are only available for certain gcc versions
 export DISABLE_SANITIZE_LEAK := $(filter 4.8%,$(SM_AND))
 
-OPT3 := (extra)
-OPT6 := (memory-sanitizer)
-OPT7 := (OpenMP)
+OPT3 := extra
+OPT6 := mem-sanitizer
+OPT7 := OpenMP
 
 # Right all optimization level options to build.prop
-GCC_OPTIMIZATION_LEVELS := $(OPT1)$(OPT2)$(OPT3)$(OPT4)$(OPT5)$(OPT6)$(OPT7)
+GCC_OPTIMIZATION_LEVELS := $(OPT1)__$(OPT2)__$(OPT4)__$(OPT3)__$(OPT6)__$(OPT7)__$(OPT5)
 ifneq ($(GCC_OPTIMIZATION_LEVELS),)
   PRODUCT_PROPERTY_OVERRIDES += \
-    ro.sm.flags=$(GCC_OPTIMIZATION_LEVELS)
+    ro.sm.flags="$(GCC_OPTIMIZATION_LEVELS)"
 endif
-
-# Display platform version and build ID for build display ID
-PRODUCT_PROPERTY_OVERRIDES += \
-  ro.build.display.id="$(PLATFORM_VERSION) $(BUILD_ID)"
