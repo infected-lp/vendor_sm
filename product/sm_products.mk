@@ -34,6 +34,11 @@ ifneq ($(filter %sirius,$(TARGET_PRODUCT)),)
   TARGET_DEVICE := sirius
 endif
 
+ifneq ($(filter %v500,$(TARGET_PRODUCT)),)
+  TARGET_DEVICE := v500
+endif
+
+
 # Filter ROM base
 ifneq ($(filter aosp% boostpop% pa% twisted% benzo%,$(TARGET_PRODUCT)),)
   TARGET_BASE_ROM := aosp
