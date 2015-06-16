@@ -651,8 +651,11 @@ endif
 # Enable some basic host gcc optimizations
 # None that are cpu specific but arch is ok. It's already known that we are on linux-x86.
 EXTRA_SABERMOD_HOST_GCC := \
-  -march=x86-64 \
   -ftree-vectorize
+
+ifeq ($(strip $(HOST_OS)),linux)
+  EXTRA_SABERMOD_HOST_GCC := -march=x86-64
+endif
 
 # Extra SaberMod CLANG C flags
 EXTRA_SABERMOD_CLANG := \
