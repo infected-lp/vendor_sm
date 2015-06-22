@@ -28,7 +28,7 @@ ifeq ($(strip $(HOST_OS)),linux)
   SHAMU_THREADS := 4
   PRODUCT_THREADS := $(SHAMU_THREADS)
   ENABLE_STRICT_ALIASING := false
-export LOCAL_O3 := true
+  LOCAL_O3 := true
 
 GRAPHITE_KERNEL_FLAGS := \
     -floop-parallelize-all \
@@ -37,11 +37,10 @@ GRAPHITE_KERNEL_FLAGS := \
 endif
 
 # Extra SaberMod GCC C flags for arch target and Kernel
-export EXTRA_SABERMOD_GCC_VECTORIZE := \
-         -ftree-vectorize \
-         -mvectorize-with-neon-quad
+EXTRA_SABERMOD_GCC_VECTORIZE := \
+  -mvectorize-with-neon-quad
 
-ifeq ($(strip $(ENABLE_STRICT_ALIASING)),true)
+ifeq ($(strip $(LOCAL_STRICT_ALIASING)),true)
 
   # Check if something is already set in product/sm_products.mk
   ifndef LOCAL_DISABLE_STRICT_ALIASING

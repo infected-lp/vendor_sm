@@ -27,7 +27,7 @@ ifeq ($(strip $(HOST_OS)),linux)
   TARGET_SM_KERNEL := 5.1
   HAMMERHEAD_THREADS := 4
   PRODUCT_THREADS := $(HAMMERHEAD_THREADS)
-  ENABLE_STRICT_ALIASING := true
+  LOCAL_STRICT_ALIASING := true
 export LOCAL_O3 := true
 
   GRAPHITE_KERNEL_FLAGS := \
@@ -46,11 +46,10 @@ MAYBE_UNINITIALIZED := \
   hwcomposer.msm8974
 
 # Extra SaberMod GCC C flags for arch target and Kernel
-export EXTRA_SABERMOD_GCC_VECTORIZE := \
-         -ftree-vectorize \
-         -mvectorize-with-neon-quad
+EXTRA_SABERMOD_GCC_VECTORIZE := \
+  -mvectorize-with-neon-quad
 
-ifeq ($(strip $(ENABLE_STRICT_ALIASING)),true)
+ifeq ($(strip $(LOCAL_STRICT_ALIASING)),true)
 
   # Enable strict-aliasing kernel flags
 export CONFIG_MACH_MSM8974_HAMMERHEAD_STRICT_ALIASING := y

@@ -63,13 +63,13 @@ ifneq ($(filter arm arm64,$(LOCAL_ARCH)),)
 endif
 
 ifeq ($(strip $(ENABLE_SABERMOD_ARM_MODE)),true)
-  OPT4 := gcc-arm
+  OPT4 := [gcc-arm]
 endif
 
 ifeq ($(strip $(LOCAL_ARCH)),arm)
 
   # Strict aliasing
-  ifeq ($(strip $(ENABLE_STRICT_ALIASING)),true)
+  ifeq ($(strip $(LOCAL_STRICT_ALIASING)),true)
     GCC_STRICT_FLAGS := -Wstrict-aliasing=3 -Werror=strict-aliasing
     CLANG_STRICT_FLAGS := -Wstrict-aliasing=2 -Werror=strict-aliasing
   endif
@@ -78,7 +78,7 @@ endif
 ifeq ($(strip $(LOCAL_ARCH)),arm64)
 
   # Strict aliasing
-  ifeq ($(strip $(ENABLE_STRICT_ALIASING)),true)
+  ifeq ($(strip $(LOCAL_STRICT_ALIASING)),true)
     GCC_STRICT_FLAGS := -fstrict-aliasing -Wstrict-aliasing=3 -Werror=strict-aliasing
     CLANG_STRICT_FLAGS := -fstrict-aliasing -Wstrict-aliasing=2 -Werror=strict-aliasing
   endif
@@ -112,7 +112,7 @@ export TARGET_ARCH_LIB_PATH := $(ANDROID_BUILD_TOP)/prebuilts/gcc/$(HOST_PREBUIL
 
         
         # Graphite ROM flags
-        OPT1 := graphite
+        OPT1 := [graphite]
 
         # Some graphite flags are only available for certain gcc versions
  export GRAPHITE_UNROLL_AND_JAM_AND := $(filter 5.1% 6.0%,$(SM_AND_NAME))
@@ -203,7 +203,7 @@ export TARGET_ARCH_LIB_PATH := $(ANDROID_BUILD_TOP)/prebuilts/gcc/$(HOST_PREBUIL
             -fno-openmp
         endif
 
-        ifeq ($(strip $(ENABLE_STRICT_ALIASING)),true)
+        ifeq ($(strip $(LOCAL_STRICT_ALIASING)),true)
 
           # strict-aliasing kernel flags
    export KERNEL_STRICT_FLAGS := \
@@ -233,7 +233,7 @@ export TARGET_ARCH_LIB_PATH := $(ANDROID_BUILD_TOP)/prebuilts/gcc/$(HOST_PREBUIL
           ro.sm.android=$(SM_AND_VERSION)
 
         # Graphite ROM flags
-        OPT1 := graphite
+        OPT1 := [graphite]
 
         # Some graphite flags are only available for certain gcc versions
  export GRAPHITE_UNROLL_AND_JAM_AND := $(filter 5.1% 6.0%,$(SM_AND_NAME))
@@ -324,7 +324,7 @@ export TARGET_ARCH_LIB_PATH := $(ANDROID_BUILD_TOP)/prebuilts/gcc/$(HOST_PREBUIL
             -fno-openmp
         endif
 
-        ifeq ($(strip $(ENABLE_STRICT_ALIASING)),true)
+        ifeq ($(strip $(LOCAL_STRICT_ALIASING)),true)
 
         # strict-aliasing kernel flags
  export KERNEL_STRICT_FLAGS := \
@@ -435,7 +435,7 @@ endif
 
 # strict-aliasing
 
-ifeq ($(strip $(ENABLE_STRICT_ALIASING)),true)
+ifeq ($(strip $(LOCAL_STRICT_ALIASING)),true)
   LOCAL_BASE_DISABLE_STRICT_ALIASING := \
     libpdfiumcore \
     libpdfium \
@@ -514,7 +514,7 @@ ifeq ($(strip $(ENABLE_STRICT_ALIASING)),true)
     LOCAL_DISABLE_STRICT_ALIASING += \
       $(LOCAL_BASE_DISABLE_STRICT_ALIASING)
   endif
-  OPT5 := strict
+  OPT5 := [strict]
 else
   OPT5 :=
 endif
@@ -556,7 +556,7 @@ ifeq ($(strip $(LOCAL_O3)),true)
   # If -O3 is enabled, force disable on thumb flags.
   # loop optmizations are not really usefull in thumb mode.
   LOCAL_DISABLE_O3_THUMB := true
-  OPT2 := O3
+  OPT2 := [O3]
 
   # Disable some modules that break with -O3
   # Add more modules if needed for devices in device/sm_device.mk or by ROM in product/rom_product.mk with
@@ -596,6 +596,15 @@ EXTRA_SABERMOD_HOST_GCC := \
   -ftree-loop-if-convert \
   -ftree-loop-im \
   -ftree-loop-ivcanon
+
+ifdef EXTRA_SABERMOD_GCC_VECTORIZE
+export EXTRA_SABERMOD_GCC_VECTORIZE := \
+         $(EXTRA_SABERMOD_GCC_VECTORIZE) \
+         -ftree-vectorize
+else
+export EXTRA_SABERMOD_GCC_VECTORIZE := \
+         -ftree-vectorize
+endif
 
 NO_OPTIMIZATIONS := $(LOCAL_BLUETOOTH_BLUEDROID)
 
@@ -678,12 +687,12 @@ endif
 # Some flags are only available for certain gcc versions
 export DISABLE_SANITIZE_LEAK := $(filter 4.8%,$(SM_AND))
 
-OPT3 := extra
-OPT6 := mem-sanitizer
-OPT7 := OpenMP
+OPT3 := [extra]
+OPT6 := [mem-sanitizer]
+OPT7 := [OpenMP]
 
 # Right all optimization level options to build.prop
-GCC_OPTIMIZATION_LEVELS := $(OPT1)__$(OPT2)__$(OPT4)__$(OPT3)__$(OPT6)__$(OPT7)__$(OPT5)
+GCC_OPTIMIZATION_LEVELS := $(OPT1)$(OPT2)$(OPT4)$(OPT3)$(OPT6)$(OPT7)$(OPT5)
 ifneq ($(GCC_OPTIMIZATION_LEVELS),)
   PRODUCT_PROPERTY_OVERRIDES += \
     ro.sm.flags="$(GCC_OPTIMIZATION_LEVELS)"

@@ -40,7 +40,7 @@ endif
 
 
 # Filter ROM base
-ifneq ($(filter aosp% boostpop% pa% twisted% benzo%,$(TARGET_PRODUCT)),)
+ifneq ($(filter aosp% boostpop% pa% twisted%,$(TARGET_PRODUCT)),)
   TARGET_BASE_ROM := aosp
   include $(SM_VENDOR)/product/aosp_product.mk
 endif
@@ -48,6 +48,14 @@ endif
 ifneq ($(filter candy5% slim% aicp% cm%,$(TARGET_PRODUCT)),)
   TARGET_BASE_ROM := cm
   include $(SM_VENDOR)/product/cm_product.mk
+endif
+
+# Extra ROM packages
+
+# PA
+ifneq ($(filter pa%,$(TARGET_PRODUCT)),)
+PRODUCT_PACKAGES += \
+  busybox
 endif
 
 # General ROM strings

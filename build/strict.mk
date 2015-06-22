@@ -17,7 +17,7 @@
 # Warnings and errors are turned on by default if strict-aliasing is set in LOCAL_CFLAGS.  Also check for arm mode strict-aliasing.
 # GCC can handle a warning level of 3 and clang a level of 2.
 
-ifeq ($(strip $(ENABLE_STRICT_ALIASING)),true)
+ifeq ($(strip $(LOCAL_STRICT_ALIASING)),true)
   ifeq ($(strip $(LOCAL_ARM_MODE)),arm)
   arm_objects_mode := $(if $(LOCAL_ARM_MODE),$(LOCAL_ARM_MODE),arm)
     ifneq ($(strip $(LOCAL_CLANG)),true)
@@ -62,19 +62,21 @@ else
 endif
 
 ifneq ($(strip $(TARGET_ARCH)),arm64)
+  ifeq ($(strip $(LOCAL_STRICT_ALIASING)),true)
 
-  # Check for local cflags.
-  ifneq ($(strip $(ENABLE_STRICT_ALIASING)),true)
-    ifeq (1,$(words $(filter -fstrict-aliasing,$(LOCAL_CFLAGS))))
-      ifneq ($(strip $(LOCAL_CLANG)),true)
-        LOCAL_CFLAGS += $(GCC_STRICT_FLAGS)
-      else
-        LOCAL_CFLAGS += $(CLANG_STRICT_FLAGS)
+    # Check for local cflags.
+    ifneq ($(strip $(LOCAL_STRICT_ALIASING)),true)
+      ifeq (1,$(words $(filter -fstrict-aliasing,$(LOCAL_CFLAGS))))
+        ifneq ($(strip $(LOCAL_CLANG)),true)
+          LOCAL_CFLAGS += $(GCC_STRICT_FLAGS)
+        else
+          LOCAL_CFLAGS += $(CLANG_STRICT_FLAGS)
+        endif
       endif
     endif
   endif
 endif
-ifeq ($(strip $(ENABLE_STRICT_ALIASING)),true)
+ifeq ($(strip $(LOCAL_STRICT_ALIASING)),true)
   ifeq (1,$(words $(filter $(LOCAL_DISABLE_STRICT_ALIASING),$(LOCAL_MODULE))))
       LOCAL_CFLAGS += -fno-strict-aliasing
   endif
