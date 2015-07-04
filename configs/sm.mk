@@ -656,6 +656,18 @@ ifeq ($(strip $(ENABLE_SABERMOD_ARM_MODE)),true)
       $(LOCAL_ARM64_COMPILERS_WHITELIST_BASE)
   endif
 endif
+# Disable some modules that should be debuggable
+LOCAL_DEBUGGING_WHITELIST_BASE := \
+$(NO_OPTIMIZATIONS)
+
+# Check if there's already something set somewhere.
+ifndef LOCAL_DEBUGGING_WHITELIST
+  LOCAL_DEBUGGING_WHITELIST := \
+    $(LOCAL_DEBUGGING_WHITELIST_BASE)
+else
+  LOCAL_DEBUGGING_WHITELIST += \
+    $(LOCAL_DEBUGGING_WHITELIST_BASE)
+endif
 
 # Enable some basic host gcc optimizations
 # None that are cpu specific but arch is ok. It's already known that we are on linux-x86.

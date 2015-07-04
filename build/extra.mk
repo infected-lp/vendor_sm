@@ -85,4 +85,22 @@ ifneq ($(filter arm arm64,$(TARGET_ARCH)),)
       endif
     endif
   endif
+ endif
+ 
+# Decrease debugging if FORCE_DISABLE_DEBUGGING is true.
+ifeq ($(filter true 1,$(FORCE_DISABLE_DEBUGGING)),)
+  ifneq ($(strip $(LOCAL_CLANG)),true)
+    ifneq (1,$(words $(LOCAL_DEBUGGING_WHITELIST)))
+      ifdef LOCAL_CFLAGS
+        LOCAL_CFLAGS += -g0
+      else
+        LOCAL_CFLAGS := -g0
+      endif
+      ifdef LOCAL_CPPFLAGS
+        LOCAL_CPPFLAGS += -g0
+      else
+        LOCAL_CPPFLAGS := -g0
+      endif
+    endif
+  endif
 endif
