@@ -5,27 +5,26 @@
 
 # Original Author Jameson Williams jameson.h.williams@intel.com
 
-ifneq ($(filter %hammerhead,$(TARGET_PRODUCT)),)
-  KERNEL_DIR := kernel/lge/hammerhead
-  KERNEL_BINARY_IMAGE := zImage-dtb
-  ifneq ($(filter pa% slim%,$(TARGET_PRODUCT)),)
-    KERNEL_DEFCONFIG := sabermod_hammerhead_defconfig
-  endif
+# Modified for SaberMod
+
+# Kernel binary prefix.  The other part of this will go in the kernel source's Makefile.
+# And also in defconfigs (arch/arm/configs/name_defconfig)(or arm64) CONFIG_CROSS_COMPILE="arm-eabi-" (or "aarch64-")
+ifeq ($(strip $(LOCAL_ARCH)),arm)
+export CROSS_COMPILE_NAME := arm-linux-gnueabi-
 endif
 
-ifneq ($(filter %mako,$(TARGET_PRODUCT)),)
-  KERNEL_DIR := kernel/lge/mako
-  KERNEL_BINARY_IMAGE := zImage
-  ifneq ($(filter pa% slim%,$(TARGET_PRODUCT)),)
-    KERNEL_DEFCONFIG := sabermod_mako_defconfig
-  endif
+ifeq ($(strip $(LOCAL_ARCH)),arm64)
+export CROSS_COMPILE_NAME := aarch64-linux-gnu-
 endif
 
 ifneq ($(filter %sirius,$(TARGET_PRODUCT)),)
   KERNEL_DIR := kernel/sony/msm8974
   KERNEL_BINARY_IMAGE := zImage-dtb
-  ifneq ($(filter pa% slim%,$(TARGET_PRODUCT)),)
+  ifneq ($(filter cm% candy5% pa%,$(TARGET_PRODUCT)),)
     KERNEL_DEFCONFIG := cm_shinano_sirius_defconfig
+  endif
+  ifneq ($(filter slim%,$(TARGET_PRODUCT)),)
+    KERNEL_DEFCONFIG := slim_shinano_sirius_defconfig
   endif
 endif
 

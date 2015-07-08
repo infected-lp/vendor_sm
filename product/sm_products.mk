@@ -13,31 +13,9 @@
 # limitations under the License.
 #
 
-# Filter device
-ifneq ($(filter %flounder,$(TARGET_PRODUCT)),)
-  TARGET_DEVICE := flounder
-endif
-
-ifneq ($(filter %hammerhead,$(TARGET_PRODUCT)),)
-  TARGET_DEVICE := hammerhead
-endif
-
-ifneq ($(filter %mako,$(TARGET_PRODUCT)),)
-  TARGET_DEVICE := mako
-endif
-
-ifneq ($(filter %shamu,$(TARGET_PRODUCT)),)
-  TARGET_DEVICE := shamu
-endif
-
 ifneq ($(filter %sirius,$(TARGET_PRODUCT)),)
   TARGET_DEVICE := sirius
 endif
-
-ifneq ($(filter %v500,$(TARGET_PRODUCT)),)
-  TARGET_DEVICE := v500
-endif
-
 
 # Filter ROM base
 ifneq ($(filter aosp% boostpop% pa% twisted%,$(TARGET_PRODUCT)),)
