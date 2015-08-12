@@ -18,6 +18,11 @@ ifneq ($(filter sirius,$(TARGET_DEVICE)),)
   LOCAL_ARCH := arm
 endif
 
+ifneq ($(filter awifi,$(TARGET_DEVICE)),)
+  include $(SM_VENDOR)/device/sm_awifi.mk
+  LOCAL_ARCH := arm
+endif
+
 # Kernel binary prefix.  The other part of this will go in the kernel source's AndroidKernel.mk.
 # And also in defconfigs (arch/arm/configs/name_defconfig)(or arm64) CONFIG_CROSS_COMPILE="arm-eabi-" (or "aarch64-")
 

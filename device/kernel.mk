@@ -28,6 +28,14 @@ ifneq ($(filter %sirius,$(TARGET_PRODUCT)),)
   endif
 endif
 
+ifneq ($(filter %awifi,$(TARGET_PRODUCT)),)
+  KERNEL_DIR := kernel/lge/awifi
+  KERNEL_BINARY_IMAGE := zImage
+  ifneq ($(filter cm%,$(TARGET_PRODUCT)),)
+    KERNEL_DEFCONFIG := cyanogenmod_awifi_defconfig
+  endif
+endif
+
 ifdef KERNEL_DIR
   include $(KERNEL_DIR)/AndroidKernel.mk
 endif

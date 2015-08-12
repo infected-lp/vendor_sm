@@ -17,6 +17,10 @@ ifneq ($(filter %sirius,$(TARGET_PRODUCT)),)
   TARGET_DEVICE := sirius
 endif
 
+ifneq ($(filter %awifi,$(TARGET_PRODUCT)),)
+  TARGET_DEVICE := awifi
+endif
+
 # Filter ROM base
 ifneq ($(filter aosp% boostpop% pa% twisted%,$(TARGET_PRODUCT)),)
   TARGET_BASE_ROM := aosp
