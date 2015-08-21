@@ -211,6 +211,9 @@ export TARGET_ARCH_LIB_PATH := $(ANDROID_BUILD_TOP)/prebuilts/gcc/$(HOST_PREBUIL
             -Werror=strict-aliasing
         endif
       endif
+      ifeq ($(strip $(ENABLE_GCC_DEFAULTS)),true)
+        USE_GCC_DEFAULTS := -march=armv7-a -mtune=cortex-a15
+      endif
     endif
 
     ifeq ($(strip $(LOCAL_ARCH)),arm64)
