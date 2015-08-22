@@ -214,6 +214,9 @@ export TARGET_ARCH_LIB_PATH := $(ANDROID_BUILD_TOP)/prebuilts/gcc/$(HOST_PREBUIL
       ifeq ($(strip $(ENABLE_GCC_DEFAULTS)),true)
         USE_GCC_DEFAULTS := -march=armv7-a -mtune=cortex-a15
       endif
+
+      # Modules that need to be compiled with gcc 4.8
+      GCC_4-8_MODULES := mdnsd
     endif
 
     ifeq ($(strip $(LOCAL_ARCH)),arm64)

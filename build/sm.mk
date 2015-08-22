@@ -113,4 +113,14 @@ ifneq ($(filter 5.1% 6.0%,$(SM_AND_NAME)),)
   endif
 endif
 
+# Allow modules to be compiled with different gcc versions.  Currently only for arm.
+ifeq ($(strip $(TARGET_ARCH)),arm)
+  ifneq ($(filter 4.9%,$(SM_AND_NAME)),)
+    ifeq (1,$(words $(filter $(GCC_4-8_MODULES), $(LOCAL_MODULE))))
+      LOCAL_CC := prebuilts/gcc/$(HOST_PREBUILT_TAG)/arm/arm-linux-androideabi-4.8/bin/arm-linux-androideabi-gcc$(HOST_EXECUTABLE_SUFFIX)
+      LOCAL_CXX := prebuilts/gcc/$(HOST_PREBUILT_TAG)/arm/arm-linux-androideabi-4.8/bin/arm-linux-androideabi-g++
+    endif
+  endif
+endif
+
 #end SaberMod

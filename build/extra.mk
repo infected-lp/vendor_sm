@@ -65,27 +65,29 @@ ifneq ($(filter arm arm64,$(TARGET_ARCH)),)
   ifneq ($(strip $(LOCAL_IS_HOST_MODULE)),true)
     ifneq ($(strip $(LOCAL_CLANG)),true)
       ifneq (1,$(words $(DISABLE_SANITIZE_LEAK)))
-        ifdef LOCAL_CONLYFLAGS
-          LOCAL_CONLYFLAGS += -fsanitize=leak
-        else
-          LOCAL_CONLYFLAGS := -fsanitize=leak
+        ifneq (1,$(words $(filter $(GCC_4-8_MODULES),$(LOCAL_MODULE))))
+          ifdef LOCAL_CONLYFLAGS
+            LOCAL_CONLYFLAGS += -fsanitize=leak
+          else
+            LOCAL_CONLYFLAGS := -fsanitize=leak
+          endif
         endif
-      endif
-      ifneq (1,$(words $(filter libwebviewchromium libc_netbsd,$(LOCAL_MODULE))))
-        ifdef LOCAL_CFLAGS
-          LOCAL_CFLAGS += -lgomp -ldl -lgcc -fopenmp
-        else
-          LOCAL_CFLAGS := -lgomp -ldl -lgcc -fopenmp
-        endif
-        ifdef LOCAL_LDLIBS
-          LOCAL_LDLIBS += -lgomp -lgcc
-        else
-          LOCAL_LDLIBS := -lgomp -lgcc
+        ifneq (1,$(words $(filter libwebviewchromium libc_netbsd,$(LOCAL_MODULE))))
+          ifdef LOCAL_CFLAGS
+            LOCAL_CFLAGS += -lgomp -ldl -lgcc -fopenmp
+          else
+            LOCAL_CFLAGS := -lgomp -ldl -lgcc -fopenmp
+          endif
+          ifdef LOCAL_LDLIBS
+            LOCAL_LDLIBS += -lgomp -lgcc
+          else
+            LOCAL_LDLIBS := -lgomp -lgcc
+          endif
         endif
       endif
     endif
   endif
- endif
+endif
  
 # Decrease debugging if FORCE_DISABLE_DEBUGGING is true.
 ifeq ($(filter true 1,$(FORCE_DISABLE_DEBUGGING)),)
