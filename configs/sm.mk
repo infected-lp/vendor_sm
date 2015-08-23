@@ -212,11 +212,12 @@ export TARGET_ARCH_LIB_PATH := $(ANDROID_BUILD_TOP)/prebuilts/gcc/$(HOST_PREBUIL
         endif
       endif
       ifeq ($(strip $(ENABLE_GCC_DEFAULTS)),true)
+        export ENABLE_GCC_DEFAULTS := true
         USE_GCC_DEFAULTS := -march=armv7-a -mtune=cortex-a15
       endif
 
       # Modules that need to be compiled with gcc 4.8
-      GCC_4-8_MODULES := $(LOCAL_BLUETOOTH_BLUEDROID)
+      GCC_4_8_MODULES := $(LOCAL_BLUETOOTH_BLUEDROID)
     endif
 
     ifeq ($(strip $(LOCAL_ARCH)),arm64)
