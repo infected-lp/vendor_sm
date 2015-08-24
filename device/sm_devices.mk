@@ -15,16 +15,19 @@
 
 ifneq ($(filter sirius,$(TARGET_DEVICE)),)
   include $(SM_VENDOR)/device/sm_sirius.mk
+  ENABLE_GCC_DEFAULTS := true
   LOCAL_ARCH := arm
 endif
 
 ifneq ($(filter awifi,$(TARGET_DEVICE)),)
   include $(SM_VENDOR)/device/sm_awifi.mk
+  ENABLE_GCC_DEFAULTS := true
   LOCAL_ARCH := arm
 endif
 
 ifneq ($(filter z3,$(TARGET_DEVICE)),)
   include $(SM_VENDOR)/device/sm_z3.mk
+  ENABLE_GCC_DEFAULTS := true
   LOCAL_ARCH := arm
 endif
 
