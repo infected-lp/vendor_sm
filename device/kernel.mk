@@ -28,6 +28,17 @@ ifneq ($(filter %sirius,$(TARGET_PRODUCT)),)
   endif
 endif
 
+ifneq ($(filter %z3,$(TARGET_PRODUCT)),)
+  KERNEL_DIR := kernel/sony/msm8974
+  KERNEL_BINARY_IMAGE := zImage-dtb
+  ifneq ($(filter cm% candy5% pa%,$(TARGET_PRODUCT)),)
+    KERNEL_DEFCONFIG := cm_shinano_leo_defconfig
+  endif
+  ifneq ($(filter slim%,$(TARGET_PRODUCT)),)
+    KERNEL_DEFCONFIG := slim_shinano_leo_defconfig
+  endif
+endif
+
 ifneq ($(filter %awifi,$(TARGET_PRODUCT)),)
   KERNEL_DIR := kernel/lge/awifi
   KERNEL_BINARY_IMAGE := zImage

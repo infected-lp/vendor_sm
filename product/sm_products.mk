@@ -17,6 +17,10 @@ ifneq ($(filter %sirius,$(TARGET_PRODUCT)),)
   TARGET_DEVICE := sirius
 endif
 
+ifneq ($(filter %z3,$(TARGET_PRODUCT)),)
+  TARGET_DEVICE := z3
+endif
+
 ifneq ($(filter %awifi,$(TARGET_PRODUCT)),)
   TARGET_DEVICE := awifi
 endif
