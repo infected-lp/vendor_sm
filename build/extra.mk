@@ -65,7 +65,7 @@ ifneq ($(filter arm arm64,$(TARGET_ARCH)),)
   ifneq ($(strip $(LOCAL_IS_HOST_MODULE)),true)
     ifneq ($(strip $(LOCAL_CLANG)),true)
       ifneq (1,$(words $(DISABLE_SANITIZE_LEAK)))
-        ifneq (1,$(words $(filter $(GCC_4-8_MODULES),$(LOCAL_MODULE))))
+        ifneq (1,$(words $(filter $(GCC_4_8_MODULES),$(LOCAL_MODULE))))
           ifdef LOCAL_CONLYFLAGS
             LOCAL_CONLYFLAGS += -fsanitize=leak
           else
