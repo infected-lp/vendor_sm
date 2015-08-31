@@ -25,8 +25,8 @@ ifeq ($(strip $(HOST_OS)),linux)
 
   # Sabermod configs
   TARGET_SM_KERNEL := 4.9
-  SIRIUS_THREADS := 4
-  PRODUCT_THREADS := $(SIRIUS_THREADS)
+  Z3_THREADS := 4
+  PRODUCT_THREADS := $(Z3_THREADS)
 LOCAL_STRICT_ALIASING := true
 export LOCAL_O3 := true
 
@@ -64,7 +64,7 @@ export EXTRA_SABERMOD_GCC_VECTORIZE := \
 ifeq ($(strip $(ENABLE_STRICT_ALIASING)),true)
 
   # Enable strict-aliasing kernel flags
-export CONFIG_MACH_MSM8974_SIRIUS_STRICT_ALIASING := y
+export CONFIG_MACH_MSM8974_Z3_STRICT_ALIASING := y
 
   # Check if something is already set in product/sm_products.mk
   ifndef LOCAL_DISABLE_STRICT_ALIASING

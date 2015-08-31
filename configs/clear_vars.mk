@@ -38,3 +38,7 @@ $(shell unset KERNEL_DEFCONFIG)
 ifneq ($(filter %sirius,$(TARGET_PRODUCT)),)
   $(shell unset CONFIG_MACH_MSM8974_SIRIUS_STRICT_ALIASING)
 endif
+
+ifneq ($(filter %z3,$(TARGET_PRODUCT)),)
+  $(shell unset CONFIG_MACH_MSM8974_Z3_STRICT_ALIASING)
+endif
