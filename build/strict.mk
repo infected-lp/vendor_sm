@@ -41,19 +41,17 @@ ifeq ($(strip $(LOCAL_STRICT_ALIASING)),true)
     endif
   endif
   ifeq ($(strip $(TARGET_ARCH)),arm64)
-    ifneq ($(strip $(LOCAL_IS_HOST_MODULE)),true)
-      ifneq ($(strip $(LOCAL_CLANG)),true)
-        ifdef LOCAL_CFLAGS
-          LOCAL_CFLAGS += $(GCC_STRICT_FLAGS)
-        else
-          LOCAL_CFLAGS := $(GCC_STRICT_FLAGS)
-        endif
+    ifeq (,$(filter true,$(LOCAL_IS_HOST_MODULE) $(LOCAL_CLANG)))
+      ifdef LOCAL_CFLAGS
+        LOCAL_CFLAGS += $(GCC_STRICT_FLAGS)
       else
-        ifdef LOCAL_CFLAGS
-          LOCAL_CFLAGS += $(CLANG_STRICT_FLAGS)
-        else
-          LOCAL_CFLAGS := $(CLANG_STRICT_FLAGS)
-        endif
+        LOCAL_CFLAGS := $(GCC_STRICT_FLAGS)
+      endif
+    else
+      ifdef LOCAL_CFLAGS
+        LOCAL_CFLAGS += $(CLANG_STRICT_FLAGS)
+      else
+        LOCAL_CFLAGS := $(CLANG_STRICT_FLAGS)
       endif
     endif
   endif

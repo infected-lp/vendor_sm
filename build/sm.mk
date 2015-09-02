@@ -47,21 +47,19 @@ endif
 # Do not use graphite on host modules or the clang compiler.
 # Also do not bother using on darwin.
 ifeq ($(HOST_OS),linux)
-  ifneq ($(strip $(LOCAL_IS_HOST_MODULE)),true)
-    ifneq ($(strip $(LOCAL_CLANG)),true)
+  ifeq (,$(filter true,$(LOCAL_IS_HOST_MODULE) $(LOCAL_CLANG)))
 
-      # If it gets this far enable graphite by default from here on out.
-      ifneq (1,$(words $(filter $(LOCAL_DISABLE_GRAPHITE),$(LOCAL_MODULE))))
-        ifdef LOCAL_CFLAGS
-          LOCAL_CFLAGS += $(GRAPHITE_FLAGS)
-        else
-          LOCAL_CFLAGS := $(GRAPHITE_FLAGS)
-        endif
-        ifdef LOCAL_LDFLAGS
-          LOCAL_LDFLAGS += $(GRAPHITE_FLAGS)
-        else
-          LOCAL_LDFLAGS := $(GRAPHITE_FLAGS)
-        endif
+    # If it gets this far enable graphite by default from here on out.
+    ifneq (1,$(words $(filter $(LOCAL_DISABLE_GRAPHITE),$(LOCAL_MODULE))))
+      ifdef LOCAL_CFLAGS
+        LOCAL_CFLAGS += $(GRAPHITE_FLAGS)
+      else
+        LOCAL_CFLAGS := $(GRAPHITE_FLAGS)
+      endif
+      ifdef LOCAL_LDFLAGS
+        LOCAL_LDFLAGS += $(GRAPHITE_FLAGS)
+      else
+        LOCAL_LDFLAGS := $(GRAPHITE_FLAGS)
       endif
     endif
   endif
@@ -89,25 +87,6 @@ ifneq ($(filter 5.1% 5.2% 6.0%,$(SM_AND_NAME)),)
         LOCAL_CFLAGS += -Wno-error
       else
         LOCAL_CFLAGS := -Wno-error
-      endif
-    endif
-  endif
-endif
-
-ifneq ($(filter 5.1% 5.2% 6.0%,$(SM_AND_NAME)),)
-  ifeq ($(strip $(LOCAL_IS_HOST_MODULE)),true)
-    ifeq (1,$(words $(filter libcutils, $(LOCAL_MODULE))))
-      ifdef LOCAL_CFLAGS
-        LOCAL_CFLAGS += -pthread
-      else
-        LOCAL_CFLAGS := -pthread
-      endif
-      ifeq ($(strip $(HOST_OS)),linux)
-        ifdef LOCAL_LDLIBS
-          LOCAL_LDLIBS += -ldl -lpthread
-        else
-          LOCAL_LDLIBS := -ldl -lpthread
-        endif
       endif
     endif
   endif
