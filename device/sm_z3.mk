@@ -13,21 +13,43 @@
 # limitations under the License.
 #
 
-# Sabermod configs
-TARGET_SM_KERNEL := 4.9
-HAMMERHEAD_THREADS := 4
-PRODUCT_THREADS := $(HAMMERHEAD_THREADS)
+# Find host os
+UNAME := $(shell uname -s)
+
+ifeq ($(strip $(UNAME)),Linux)
+  HOST_OS := linux
+endif
+
+# Only use these compilers on linux host.
+ifeq ($(strip $(HOST_OS)),linux)
+
+  # Sabermod configs
+  TARGET_SM_KERNEL := 4.9
+  Z3_THREADS := 4
+  PRODUCT_THREADS := $(Z3_THREADS)
 LOCAL_STRICT_ALIASING := true
 export LOCAL_O3 := true
 
-GRAPHITE_KERNEL_FLAGS := \
-  -floop-parallelize-all \
-  -ftree-parallelize-loops=$(PRODUCT_THREADS) \
-  -fopenmp
+LOCAL_DISABLE_STRICT_ALIASING := \
+	libcrypto_static \
+	gatt_testtool \
+	libssh \
+	ssh \
+	libsurfaceflinger \
+	libOmxVenc \
+	lsof
 
-ifneq ($(filter 5% 6%,$(TARGET_SM_AND)),)
-  LOCAL_DISABLE_GRAPHITE := \
-    camera.hammerhead
+LOCAL_DISABLE_GRAPHITE := libncurses
+
+  GRAPHITE_KERNEL_FLAGS := \
+    -floop-parallelize-all \
+    -ftree-parallelize-loops=$(PRODUCT_THREADS) \
+    -fopenmp
+
+  ifneq ($(filter 5% 6%,$(TARGET_SM_AND)),)
+    LOCAL_DISABLE_GRAPHITE := \
+      camera.msm8974
+  endif
 endif
 
 # General flags for gcc 4.9 to allow compilation to complete.
@@ -35,23 +57,24 @@ MAYBE_UNINITIALIZED := \
   hwcomposer.msm8974
 
 # Extra SaberMod GCC C flags for arch target and Kernel
-EXTRA_SABERMOD_GCC_VECTORIZE := \
-  -mvectorize-with-neon-quad
+export EXTRA_SABERMOD_GCC_VECTORIZE := \
+         -ftree-vectorize \
+         -mvectorize-with-neon-quad
 
-ifeq ($(strip $(LOCAL_STRICT_ALIASING)),true)
+ifeq ($(strip $(ENABLE_STRICT_ALIASING)),true)
 
   # Enable strict-aliasing kernel flags
-export CONFIG_MACH_MSM8974_HAMMERHEAD_STRICT_ALIASING := y
+export CONFIG_MACH_MSM8974_Z3_STRICT_ALIASING := y
 
   # Check if something is already set in product/sm_products.mk
   ifndef LOCAL_DISABLE_STRICT_ALIASING
     LOCAL_DISABLE_STRICT_ALIASING := \
       libmmcamera_interface\
-      camera.hammerhead
+      camera.msm8974
   else
     LOCAL_DISABLE_STRICT_ALIASING += \
       libmmcamera_interface\
-      camera.hammerhead
+      camera.msm8974
   endif
 endif
 

@@ -14,37 +14,25 @@
 #
 
 # Filter device
-ifneq ($(filter %flounder,$(TARGET_PRODUCT)),)
-  TARGET_DEVICE := flounder
+ifneq ($(filter %sirius,$(TARGET_PRODUCT)),)
+  TARGET_DEVICE := sirius
 endif
 
-ifneq ($(filter %hammerhead,$(TARGET_PRODUCT)),)
-  TARGET_DEVICE := hammerhead
+ifneq ($(filter %z3,$(TARGET_PRODUCT)),)
+  TARGET_DEVICE := z3
 endif
 
-ifneq ($(filter %mako,$(TARGET_PRODUCT)),)
-  TARGET_DEVICE := mako
-endif
-
-ifneq ($(filter %shamu,$(TARGET_PRODUCT)),)
-  TARGET_DEVICE := shamu
-endif
-
-ifneq ($(filter %bacon,$(TARGET_PRODUCT)),)
-  TARGET_DEVICE := bacon
-endif
-
-ifneq ($(filter %baconcaf,$(TARGET_PRODUCT)),)
-  TARGET_DEVICE := baconcaf
+ifneq ($(filter %awifi,$(TARGET_PRODUCT)),)
+  TARGET_DEVICE := awifi
 endif
 
 # Filter ROM base
-ifneq ($(filter aosp% boostpop% pa% twisted% rnx%,$(TARGET_PRODUCT)),)
+ifneq ($(filter aosp% boostpop% pa% twisted%,$(TARGET_PRODUCT)),)
   TARGET_BASE_ROM := aosp
   include $(SM_VENDOR)/product/aosp_product.mk
 endif
 
-ifneq ($(filter slim% aicp% cm%,$(TARGET_PRODUCT)),)
+ifneq ($(filter candy5% slim% aicp% cm%,$(TARGET_PRODUCT)),)
   TARGET_BASE_ROM := cm
   include $(SM_VENDOR)/product/cm_product.mk
 endif
